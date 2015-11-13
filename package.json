@@ -1,0 +1,24 @@
+{
+  "name": "juxtapros2",
+  "private": true,
+  "version": "0.0.1-alpha",
+  "description": "JuxtaPros is a simple tool for comparing alternatives.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JacobCWard/juxtapros2.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JacobCWard/juxtapros2/issues"
+  },
+  "homepage": "https://github.com/JacobCWard/juxtapros2#readme",
+  "dependencies": {
+    "express": "^4.13.3",
+    "jade": "^1.11.0"
+  }
+}
