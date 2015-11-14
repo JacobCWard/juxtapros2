@@ -1,5 +1,27 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+    h1.title= title
+    
+    .container.col-sm-12
+        .container.col-sm-10.col-sm-offset-1
+            .row
+                .col-xs-12
+                    .input-group
+                        span.input-group-addon
+                            span 0
+                        input.form-control.text-center(type="text" placeholder="Alternative 1")
+            br
+            .row
+                .col-xs-6
+                    .input-group
+                        span.input-group-addon
+                            span.glyphicon.glyphicon-align-justify
+                        input.form-control.text-center(type="text" placeholder="Pro 1")
+                .col-xs-6
+                    .input-group
+                        span.input-group-addon
+                            span.glyphicon.glyphicon-align-justify
+                        input.form-control.text-center(type="text" placeholder="Con 1")
+        .container.col-sm-1.col-xs-12.text-center
+            span.glyphicon.glyphicon-plus.form-control-static

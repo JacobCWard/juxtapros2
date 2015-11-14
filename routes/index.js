@@ -7,7 +7,7 @@ var databaseURL = 'mongodb://127.0.0.1:27017/' + databaseName;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'JuxtaPros 2' });
 });
 
 router.param('document', function (req, res, next, document) {
