@@ -4,9 +4,14 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var User = require('./userdb');
+
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 
 var app = express();
 
@@ -27,6 +32,10 @@ app.use(require('node-sass-middleware')({
   sourceMap: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({ secret: 'Tyler is Awesome' }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', routes);
 app.use('/users', users);
@@ -62,5 +71,22 @@ app.use(function(err, req, res, next) {
   });
 });
 
+passport.use(new LocalStrategy(
+  function(username, password, cb) {
+    User.users.findByUsername(username, function(err, user) {
+      if (err) { return cb(err); }
+      if (!user) { return cb(null, false); }
+      if (user.password != password) { return cb(null, false); }
+      return cb(null, user);
+    });
+  }));
+
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+    done(null, user);
+});
 
 module.exports = app;
