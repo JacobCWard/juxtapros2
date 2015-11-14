@@ -1,0 +1,27 @@
+<p>
+    Post Test
+</p>
+<script src="/javascripts/reqwest.min.js"></script>
+<script>
+var data = {
+    "_id": "331568447688164861665143513",
+    "address": 21,
+    "name": "Success!",
+    "restaurant_id": 331566518164861684476843513
+};
+
+reqwest({
+  url: '/doc/331566518164861684476843513',
+  method: 'post',
+  type: 'json',
+  data: data,
+})
+.always(function(resp) {
+  console.log(resp.content);
+})
+
+// var request = new XMLHttpRequest();
+// request.open('POST', '/doc/40361322', true);
+// request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+// request.send(data);
+</script>
