@@ -1,0 +1,16 @@
+extend layout
+
+block content
+    .row
+        .col-xs-12.col-sm-6.col-sm-offset-3.col-md-4.col-md-offset-4
+            .well
+                h1.title(style="margin-top:-10px")= title
+                form(action="/login" method="post")
+                    .form-group
+                        label(for="usernameField") Username:
+                        input#usernameField.form-control(type="text" name="username")
+                    .form-group
+                        label(for="passwordField") Password:
+                        input#passwordField.form-control(type="password" name="password")
+                    button.btn.btn-success(type="submit" style="width:100%") Submit
+            

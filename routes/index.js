@@ -1,14 +1,32 @@
 var express = require('express');
 var router = express.Router();
 var MongoClient = require('mongodb').MongoClient;
+var passport = require('passport');
 
 var databaseName = 'test'
 var databaseURL = 'mongodb://127.0.0.1:27017/' + databaseName;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'JuxtaPros 2' });
+    console.log("Current user: " + JSON.stringify(req.user));
+    if (req.user){
+        var currentUsername = req.user.displayName
+    }
+    else {
+        var currentUsername = "<a href=\"/login\">Log In</a>"
+    }
+    res.render('index', { title: 'JuxtaPros 2', currentUser: currentUsername });
 });
+
+router.get('/login', function(req, res, next) {
+    res.render('login', { title: 'Login' })
+});
+
+router.post('/login',
+    passport.authenticate('local', {    successRedirect: '/',
+                                        failureRedirect: '/login',
+                                        failureFlash: false })
+);
 
 router.param('document', function (req, res, next, document) {
   withDB(function (db) {
