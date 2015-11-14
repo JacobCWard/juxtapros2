@@ -8,7 +8,14 @@ var databaseURL = 'mongodb://127.0.0.1:27017/' + databaseName;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'JuxtaPros 2' });
+    console.log("Current user: " + JSON.stringify(req.user));
+    if (req.user){
+        var currentUsername = req.user.displayName
+    }
+    else {
+        var currentUsername = "<a href=\"/login\">Log In</a>"
+    }
+    res.render('index', { title: 'JuxtaPros 2', currentUser: currentUsername });
 });
 
 router.get('/login', function(req, res, next) {
