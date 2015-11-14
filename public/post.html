@@ -4,24 +4,43 @@
 <script src="/javascripts/reqwest.min.js"></script>
 <script>
 var data = {
-    "_id": "331568447688164861665143513",
-    "address": 21,
-    "name": "Success!",
-    "restaurant_id": 331566518164861684476843513
+    "address": {
+        "zipcode": "11369",
+        "building": "8825",
+        "coord": [-73.8803827, 40.7643124],
+        "street": "ASTORIA BOULEVARD"
+    },
+    "borough": "QUEENS",
+    "cuisine": "AMERICAN ",
+    "grades": [{
+        "grade": "Z",
+        "score": 38,
+        "date": "2014-11-15T00:00:00.000Z"
+    }, {
+        "score": 10,
+        "date": "2014-05-02T00:00:00.000Z",
+        "grade": "A"
+    }, {
+        "date": "2013-03-02T00:00:00.000Z",
+        "grade": "A",
+        "score": 7
+    }, {
+        "grade": "A",
+        "score": 13,
+        "date": "2012-02-10T00:00:00.000Z"
+    }],
+    "name": "Tyler BRUNOS ON THE BOULEVARD",
+    "restaurant_id": "40356151"
 };
 
 reqwest({
-  url: '/doc/331566518164861684476843513',
-  method: 'post',
-  type: 'json',
-  data: data,
-})
-.always(function(resp) {
-  console.log(resp.content);
-})
+        url: '/doc/40356151',
+        method: 'post',
+        type: 'json',
+        data: data,
+    })
+    .always(function(resp) {
+        console.log(resp.content);
+    })
 
-// var request = new XMLHttpRequest();
-// request.open('POST', '/doc/40361322', true);
-// request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-// request.send(data);
 </script>

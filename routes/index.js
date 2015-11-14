@@ -3,8 +3,9 @@ var router = express.Router();
 var MongoClient = require('mongodb').MongoClient;
 var passport = require('passport');
 
-var databaseName = 'test'
+var databaseName = 'test';
 var databaseURL = 'mongodb://127.0.0.1:27017/' + databaseName;
+var databaseCollection = 'restaurants';
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -23,36 +24,68 @@ router.get('/login', function(req, res, next) {
 });
 
 router.post('/login',
-    passport.authenticate('local', {    successRedirect: '/',
-                                        failureRedirect: '/login',
-                                        failureFlash: false })
+    passport.authenticate('local', {
+      successRedirect: '/',
+      failureRedirect: '/login',
+      failureFlash: false
+    })
 );
 
-router.param('document', function (req, res, next, document) {
+router.param('docid', function (req, res, next, docID) {
+  req.docID = docID;
+  next();
+});
+
+router.route('/doc/:docid')
+.all(function (req, res, next) {
   withDB(function (db) {
-    db.collection('restaurants')
-    .find({'restaurant_id': document})
-    .limit(1)
+    req.db = db;
+
+    db.collection(databaseCollection)
+    .find({ restaurant_id: req.docID })
     .toArray(function (err, result) {
       if (err) throw err;
-      req.document = result[0];
-      db.close();
+      if (result.length > 0) {
+        req.docFound = true;
+        req.docObj = result[0];
+      } else {
+        req.docFound = false;
+      }
       next();
-    });
+    })
   });
-});
-
-router.get('/doc/:document', function(req, res, next) {
-  var str = (req.document) ? req.document.name : "Restaurant not found.";
-  res.render('dbtest', { title: 'Database Query', body: str });
-});
+})
+.get(function (req, res, next) {
+    if (req.docFound)
+        res.json(req.docObj);
+    else
+        res.json({});
+    next();
+})
+.post(function (req, res, next) {
+    req.db.collection(databaseCollection)
+    .updateOne(
+        { restaurant_id: req.docID },
+        req.body,
+        { upsert: true },
+        function (err, item) {
+            if (err) throw err;
+            res.status(200);
+            next();
+        }
+    );
+})
+.all(function (req, res, next) {
+    res.end();
+    req.db.close();
+})
 
 function withDB(callback) {
-  MongoClient.connect(databaseURL, function(err, db) {
-    if (err) {
-      console.log("Error: Database Connection Error.");
-      throw err;
-    }
+    MongoClient.connect(databaseURL, function(err, db) {
+        if (err) {
+            console.log("Error: Database Connection Error.");
+            throw err;
+        }
     callback(db);
   });
 };

@@ -33,7 +33,7 @@ app.use(require('node-sass-middleware')({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({ secret: 'Tyler is Awesome' }));
+app.use(session({ secret: 'Tyler is Awesome', resave: true, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 
