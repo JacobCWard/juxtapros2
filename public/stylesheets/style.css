@@ -5,6 +5,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+@import url(https://fonts.googleapis.com/css?family=Amatic+SC:400);
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -5820,5 +5821,10 @@ button.close {
 @media print {
   .hidden-print {
     display: none !important; } }
+
+.title {
+  text-align: center;
+  font-family: 'Amatic SC', cursive;
+  font-size: 52pt; }
 
 /*# sourceMappingURL=style.css.map */
